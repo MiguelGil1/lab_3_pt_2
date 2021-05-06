@@ -5,7 +5,7 @@ using namespace std;
 
 class sudo{
 public:
-    void verifying_password(string, string);
+    void verifying_password();
 
 };
 

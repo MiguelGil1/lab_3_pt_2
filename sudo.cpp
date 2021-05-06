@@ -2,10 +2,16 @@
 #include "encriptar_desencriptar.h"
 #include <fstream>
 
-codificar_decodificar dato;
-int semilla = 4; int metodo = 2;
 
-void sudo::verifying_password(string clave_decodificada, string clave_admin){
+
+void sudo::verifying_password(){
+    const int semilla = 4, metodo = 2;
+    codificar_decodificar dato;
+    string clave_admin = "";
+    cout << "Bienvenido Administrador." << endl;
+    cout << "Por favor ingrese la clave: ";
+    cin >> clave_admin;
+    string clave_decodificada = dato.decodificar(semilla,metodo,"sudo");
     if(clave_decodificada == clave_admin){
         system("CLS");
         bool session_key = true;
