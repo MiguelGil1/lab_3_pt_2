@@ -15,6 +15,8 @@
        si son iguales se le da acceso al usuario admistrador para poder registrar usuarios
        en el banco
        De lo contrario se imprimira el mensaje de clave incorrecta
+       Para su usuo solo se dede crear un objeto tipo sudo, y con el nombre de la variable
+       escrita se puede invocar la funcion verifying_password
 */
 #ifndef SUDO_H
 #define SUDO_H
