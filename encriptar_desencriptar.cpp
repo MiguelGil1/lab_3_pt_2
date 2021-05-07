@@ -356,9 +356,17 @@ string codificar_decodificar::codificar(int semilla, int metodo, string cadena){
     }else{
         tamanio = int(binario.length()/semilla)+1;
     }
-    //Se reserva en el heap
-    cadena_semilla = new string[tamanio];
-    cadena_codificada = new string[tamanio];
+    //Se reserva en el heap por medio de un try, el cual se encargara de supervisar
+    //Que haya suficiente memoria en el hep
+
+    try {
+        cadena_semilla = new string[tamanio];
+        cadena_codificada = new string[tamanio];
+    }  catch (std :: bad_alloc) {
+        printf("No hay suficiente memoria");
+        abort();
+    }
+
     separar_cadena(binario,semilla,cadena_semilla);
     //SE verifica el metodo de codificacion y se invoca la funcion respectiva
 
@@ -412,9 +420,15 @@ string codificar_decodificar::decodificar(int semilla, int metodo, string archiv
             tamanio = int(texto_archivo.length()/semilla)+1;
         }
 
-        //Se reserva en el heap
-        cadena_semilla = new string[tamanio];
-        cadena_decodificada = new string[tamanio];
+        //Se reserva en el heap por medio de un try, el cual se encargara de supervisar
+        //Que haya suficiente memoria en el hep
+        try {
+            cadena_semilla = new string[tamanio];
+            cadena_decodificada = new string[tamanio];
+        }  catch (std :: bad_alloc) {
+            printf("No hay suficiente memoria");
+            abort();
+        }
         separar_cadena(texto_archivo,semilla,cadena_semilla);
 
         //SE verifica el metodo de decodificacion y se invoca la funcion respectiva
