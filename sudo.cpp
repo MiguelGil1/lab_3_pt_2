@@ -60,8 +60,6 @@
 #include "encriptar_desencriptar.h"
 #include <fstream>
 #include <string.h>
-#include <stdio.h>
-#include <cstdlib>
 
 void sudo::verifying_password(){
     //VARIABLES PARA LA DECODIFICACION DEL ARCHIVO SUDO.
