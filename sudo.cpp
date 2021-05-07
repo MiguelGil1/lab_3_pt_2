@@ -108,39 +108,54 @@ void sudo::verifying_password(){
                 int saldo_transaccional = 0, clave = 0;
                 bool encontrado = false;
 
+                //Se abre el archivo usuarios_decodificados.txt y se guarda la info
+                //de los usuarios decodificados.
                 Guardar.open("../usuarios_decodificados.txt");
                 Guardar << contendido_archivo;
                 Guardar.close();
 
+
+                //Se abre el archivo usuarios_decodifucados.txt
                 Leer.open("../usuarios_decodificados.txt");
                 char linea[300];
                 Leer.getline(linea,sizeof(linea));
                 char id[15];
+                //Se lee el archivo hasta que se llegue al final del mismo
                 while(!Leer.eof()){
+                    //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
+                    //Id, clace y saldo
                     for(int i = 0; i < 3; i++){
                         char *puntero;
                         if(i == 0){
+                            //Se iguala el untero tipo char a
                             puntero = strtok(linea, ",");
+                            //Con
                             strcpy(id, puntero);
                             id_tmp = id;
                         }else if(i == 1){
                             puntero = strtok(NULL,",");
+                            //Se convierte el puntero a entero
                             clave = atoi(puntero);
                         }else if(i == 2){
                             puntero = strtok(NULL,"\n");
+                            //Se convierte el puntero a entero
                             saldo_transaccional = atoi(puntero);
                         }
 
                     }
+                    //Se evalua si el id leido es igual al id a registrar
                     if(id_usuario == id_tmp){
+                        //Si se encuentra se iguala la variable tipo bool encontrado a true
                         encontrado = true;
                         break;
                     }else{
+                        //De lo contrario se lee la sigueinte linea
                         Leer.getline(linea,sizeof(linea));
                     }
 
                 }
                 Leer.close();
+                //Si encontrado es diferente de true, se procede a pedir la clavr
                 if(encontrado == false){
                     usuario += id_usuario+",";
                     cout << "Ingrese clave (4 digitos): ";
@@ -161,15 +176,21 @@ void sudo::verifying_password(){
                     cout << "Usuario creado correctamente!" << endl;
                 }else{
                     cout << "Usuario ya existente en la base de datos." << endl;
-                }
+                }  
+                //Se remueve el usuario temporal usuarios_decodificados.txt
                 remove("../usuarios_decodificados.txt");
                 break;
             }
             case 2:
+                //Si el usuario selecciona la opcion 2, se procede cerrar sesion
+                //Igualanfo la variabel tipo bool session_key a false
                 cout << "Cerrando sesion" << endl;
                 session_key = false;
                 break;
             default:
+                //Si el usuario ingrese una opcion diferente a 1 o 2 se procede
+                //a imprimir en pantalla "Opcion fuera de rango"
+                //Para luego imprimir nueamente el submenu
                 cout << "Opcion fuera de rango." << endl;
                 break;
             }
