@@ -61,6 +61,8 @@
 #include <fstream>
 #include <string.h>
 
+int usuarios = 0;
+
 void sudo::verifying_password(){
     //VARIABLES PARA LA DECODIFICACION DEL ARCHIVO SUDO.
     const int semilla = 4, metodo = 2;
@@ -111,62 +113,65 @@ void sudo::verifying_password(){
                 cin >> id_usuario;
 
                 //Se dedodifica la informacion contendia en el archivo usuarios
-                string contendido_archivo= dato.decodificar(semilla,metodo,"usuarios");
                 string id_tmp = "";
                 int saldo_transaccional = 0, clave = 0;
                 bool encontrado = false;
 
-                //Se abre el archivo usuarios_decodificados.txt y se guarda la info
-                //de los usuarios decodificados.
-                Guardar.open("../usuarios_decodificados.txt");
-                Guardar << contendido_archivo;
-                Guardar.close();
+                if(usuarios > 0){
+                    //Se abre el archivo usuarios_decodificados.txt y se guarda la info
+                    //de los usuarios decodificados.
+                    string contendido_archivo= dato.decodificar(semilla,metodo,"usuarios");
+                    Guardar.open("../usuarios_decodificados.txt");
+                    Guardar << contendido_archivo;
+                    Guardar.close();
 
 
-                //Se abre el archivo usuarios_decodifucados.txt
-                Leer.open("../usuarios_decodificados.txt");
-                char linea[300];
-                Leer.getline(linea,sizeof(linea));
-                char id[15];
-                //Se lee el archivo hasta que se llegue al final del mismo
-                while(!Leer.eof()){
-                    //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
-                    //Id, clace y saldo
-                    for(int i = 0; i < 3; i++){
-                        char *puntero;
-                        if(i == 0){
-                            //strtok recibe dos parametros, ek primero es la linea que queremos dividir
-                            //El segundo va a ser el separador y la funcion retorna un puntero
-                            puntero = strtok(linea, ",");
-                            strcpy(id, puntero);
-                            //Se iguala id_tmp al id leido
-                            id_tmp = id;
-                        }else if(i == 1){
-                            //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
-                            puntero = strtok(NULL,",");
-                            //Se convierte el puntero a entero y se iguala a clave
-                            clave = atoi(puntero);
-                        }else if(i == 2){
-                            //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
-                            puntero = strtok(NULL,"\n");
-                            //Se convierte el puntero a entero
-                            saldo_transaccional = atoi(puntero);
-                            //Se convierte el puntero a entero y se iguala a saldo_transaccional
+                    //Se abre el archivo usuarios_decodifucados.txt
+                    Leer.open("../usuarios_decodificados.txt");
+                    char linea[300];
+                    Leer.getline(linea,sizeof(linea));
+                    char id[15];
+                    //Se lee el archivo hasta que se llegue al final del mismo
+                    while(!Leer.eof()){
+                        //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
+                        //Id, clace y saldo
+                        for(int i = 0; i < 3; i++){
+                            char *puntero;
+                            if(i == 0){
+                                //strtok recibe dos parametros, ek primero es la linea que queremos dividir
+                                //El segundo va a ser el separador y la funcion retorna un puntero
+                                puntero = strtok(linea, ",");
+                                strcpy(id, puntero);
+                                //Se iguala id_tmp al id leido
+                                id_tmp = id;
+                            }else if(i == 1){
+                                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                                puntero = strtok(NULL,",");
+                                //Se convierte el puntero a entero y se iguala a clave
+                                clave = atoi(puntero);
+                            }else if(i == 2){
+                                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                                puntero = strtok(NULL,"\n");
+                                //Se convierte el puntero a entero
+                                saldo_transaccional = atoi(puntero);
+                                //Se convierte el puntero a entero y se iguala a saldo_transaccional
+                            }
+
                         }
-
+                        //Se evalua si el id leido es igual al id a registrar
+                        if(id_usuario == id_tmp){
+                            //Si se encuentra se iguala la variable tipo bool encontrado a true
+                            encontrado = true;
+                            break;
+                        }else{
+                            //De lo contrario se lee la sigueinte linea
+                            Leer.getline(linea,sizeof(linea));
+                        }
                     }
-                    //Se evalua si el id leido es igual al id a registrar
-                    if(id_usuario == id_tmp){
-                        //Si se encuentra se iguala la variable tipo bool encontrado a true
-                        encontrado = true;
-                        break;
-                    }else{
-                        //De lo contrario se lee la sigueinte linea
-                        Leer.getline(linea,sizeof(linea));
-                    }
-
+                    Leer.close();
+                }else{
+                    usuarios++;
                 }
-                Leer.close();
                 //Si encontrado es diferente de true, se procede a pedir la clavr
                 if(encontrado == false){
                     usuario += id_usuario+",";
