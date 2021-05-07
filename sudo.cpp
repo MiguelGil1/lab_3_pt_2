@@ -69,16 +69,26 @@ void sudo::verifying_password(){
     codificar_decodificar dato;
     ifstream Leer;
     string clave_admin = "";
+    bool ban = false;
     cout << "Bienvenido Administrador." << endl;
     cout << "Por favor ingrese la clave: ";
-    cin >> clave_admin;
+    string clave_decodificada;
+
+    try {
+        cin >> clave_admin;
+        clave_decodificada = dato.decodificar(semilla,metodo,"sudo");
+    }  catch (std :: length_error) {
+        cout << "Clave ingresada fuera de rango." << endl;
+        ban = true;
+    }
+
 
     //Se obtiene la clave decodificada creando una variabel tipo string
     //Y se invoca la funcion decodificar de la libreria encriptar_desencriptar.h
-    string clave_decodificada = dato.decodificar(semilla,metodo,"sudo");
+
 
     //Se evalua si la clave ingresada es igual a la que se encuentra en la del archivo sudo.txt
-    if(clave_decodificada == clave_admin){
+    if(clave_decodificada == clave_admin and ban != true){
         system("CLS");
         bool session_key = true;
         int opt_admin = 0;
@@ -186,7 +196,7 @@ void sudo::verifying_password(){
             case 2:
                 //Si el usuario selecciona la opcion 2, se procede cerrar sesion
                 //Igualanfo la variabel tipo bool session_key a false
-                cout << "Cerrando sesion" << endl;
+                cout << "Cerrando sesion......" << endl;
                 session_key = false;
                 break;
             default:

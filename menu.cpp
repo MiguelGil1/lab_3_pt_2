@@ -15,6 +15,7 @@
 #include "menu.h"
 #include "sudo.h"
 #include "usuarios.h"
+
 void menu::gui(){
     //Se crean objetos tipo sudo y usuarios
     sudo administrador;
