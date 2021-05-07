@@ -68,17 +68,25 @@ void usuarios::users(){
         //For que itera 3 veces por linea debido a que son 3 los datos almacenados
         //id, clave, saldo
         for(int i = 0; i < 3; i++){
+            //Se inicializa una variable tipo puntero a char
             char *puntero;
             if(i == 0){
+                //strtok recibe dos parametros, ek primero es la linea que queremos dividir
+                //El segundo va a ser el separador y la funcion retorna un puntero
                 puntero = strtok(linea, ",");
                 strcpy(id, puntero);
+                //Se iguala id_tmp al id leido
                 id_tmp = id;
             }else if(i == 1){
+                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
                 puntero = strtok(NULL,",");
+                //Se convierte el puntero a entero y se iguala a clave
                 clave = atoi(puntero);
             }else if(i == 2){
+                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
                 puntero = strtok(NULL,"\n");
                 saldo_transaccional = atoi(puntero);
+                //Se convierte el puntero a entero y se iguala a clave
             }
 
         }

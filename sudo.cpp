@@ -125,19 +125,23 @@ void sudo::verifying_password(){
                     for(int i = 0; i < 3; i++){
                         char *puntero;
                         if(i == 0){
-                            //Se iguala el untero tipo char a
+                            //strtok recibe dos parametros, ek primero es la linea que queremos dividir
+                            //El segundo va a ser el separador y la funcion retorna un puntero
                             puntero = strtok(linea, ",");
-                            //Con
                             strcpy(id, puntero);
+                            //Se iguala id_tmp al id leido
                             id_tmp = id;
                         }else if(i == 1){
+                            //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
                             puntero = strtok(NULL,",");
-                            //Se convierte el puntero a entero
+                            //Se convierte el puntero a entero y se iguala a clave
                             clave = atoi(puntero);
                         }else if(i == 2){
+                            //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
                             puntero = strtok(NULL,"\n");
                             //Se convierte el puntero a entero
                             saldo_transaccional = atoi(puntero);
+                            //Se convierte el puntero a entero y se iguala a saldo_transaccional
                         }
 
                     }
