@@ -224,18 +224,28 @@ void usuarios::users(){
                 //Y se guarda en una variable tipo string llamada usuarios_actualizados_codificados
                 //Para ello se debe tener en cuenta que la funcion codificar, recibe 3 parametros:
                 //Int semilla, int metodo, string cadena_a_codificar
-                string usuarios_actualizados_codificados = dato.codificar(semilla, metodo,usuarios_actualizados);
 
-                //Se guarda en un archivo llamado temp.txt la info codificada
-                Temp.open("../temp.txt");
-                Temp << usuarios_actualizados_codificados;
-                Leer.close();
-                Temp.close();
+                string usuarios_actualizados_codificados;
+                bool ban2 = false;
+                try {
+                    usuarios_actualizados_codificados = dato.codificar(semilla, metodo,usuarios_actualizados);
+                }  catch (std :: length_error) {
+                    cout << "Error\nInformacion codificada demasiado larga." << endl;
+                    ban2 = true;
+                }
 
-                //Se remueve el archivo usuarios.txt y se renombra el archivo temp.txt
-                //por usuarios.txt
-                remove("../usuarios.txt");
-                rename("../temp.txt","../usuarios.txt");
+                if(ban2 != true){
+                    //Se guarda en un archivo llamado temp.txt la info codificada
+                    Temp.open("../temp.txt");
+                    Temp << usuarios_actualizados_codificados;
+                    Leer.close();
+                    Temp.close();
+
+                    //Se remueve el archivo usuarios.txt y se renombra el archivo temp.txt
+                    //por usuarios.txt
+                    remove("../usuarios.txt");
+                    rename("../temp.txt","../usuarios.txt");
+                }
             }else{
                 //Si la clave ingresada es diferente a la clave del archivo, se imprime lo sigueinte:
                 cout << "Clave incorrecta." << endl;
