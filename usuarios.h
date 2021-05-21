@@ -15,6 +15,11 @@ using namespace std;
 class usuarios{
 public:
     void users();
+    int getClave_ingresada() const;
+    void setClave_ingresada(int value);
+
+private:
+    int clave_ingresada;
 };
 
 #endif // USUARIOS_H

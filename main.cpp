@@ -14,6 +14,6 @@ using namespace std;
 
 int main(){
     menu mostrar_menu;
-    mostrar_menu.gui();
+    mostrar_menu.menu_principal();
     return 0;
 }

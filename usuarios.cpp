@@ -27,10 +27,16 @@
 */
 #include "usuarios.h"
 #include "encriptar_desencriptar.h"
+#include "menu.h"
 #include <fstream>
 #include <string.h>
+int usuarios::getClave_ingresada() const{
+    return clave_ingresada;
+}
 
-
+void usuarios::setClave_ingresada(int value){
+    clave_ingresada = value;
+}
 void usuarios::users(){
     const int semilla = 4, metodo = 2;
     string usuarios_actualizados = "";
@@ -41,16 +47,17 @@ void usuarios::users(){
     int clave = 0, saldo_transaccional = 0, clave_usuario = 0;
     bool encontrado = false;
     bool ban = false;
+    menu usuarios;
+    int msj_usuarios = 0;
 
+    usuarios.gui_usuarios();
 
-    cout << "Bienvenido Usuario." << endl;
-    cout << "Por favor ingrese numero de identificacion: ";
     string contendido_archivo;
 
     try {
         cin >> id_buscar;
         contendido_archivo = dato.decodificar(semilla,metodo,"usuarios");
-    }  catch (std :: length_error) {
+    }  catch (std :: length_error){
         cout << "Id muy largo" << endl;
         ban = true;
     }
@@ -115,12 +122,16 @@ void usuarios::users(){
         Leer.close();
         if(encontrado == false){
             //Si no se encontro el usuario se imprime lo siguiente
-            cout << "No se encontro el usuario ingresado." << endl;
+            msj_usuarios = 1;
+            usuarios.setTipo_mensaje_usuarios(msj_usuarios);
+            usuarios.mensajes_usuarios();
+            //cout << "No se encontro el usuario ingresado." << endl;
         }else{
-            //De lo contrario se procede a preguntarle la clave
-            cout << "Ingrese la clave: ";
-            //Se le pide al usuario la clave
-            cin >> clave_usuario;
+            msj_usuarios = 2;
+            usuarios.setTipo_mensaje_usuarios(msj_usuarios);
+            usuarios.mensajes_usuarios();
+            clave_usuario = getClave_ingresada();
+
             //Se evalua si las claves del archivo usuarios_decodificados y la clave
             //ingresada coinciden
             if(clave == clave_usuario){
@@ -256,3 +267,5 @@ void usuarios::users(){
         remove("../usuarios_decodificados.txt");
     }
 }
+
+

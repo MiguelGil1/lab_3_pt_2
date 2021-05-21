@@ -13,7 +13,18 @@ using namespace std;
 
 class menu{
 public:
-    void gui();
+    void menu_principal();
+    bool llamamiento_de_funcionalidades();
+    void gui_usuarios();
+    void mensajes_usuarios();
+    int getOpcion_menu_principal() const;
+    void setOpcion_menu_principal(int value);
+    int getTipo_mensaje_usuarios() const;
+    void setTipo_mensaje_usuarios(int value);
+
+private:
+    int opcion_menu_principal;
+    int tipo_mensaje_usuarios;
 };
 
 #endif // MENU_H
