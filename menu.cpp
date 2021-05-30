@@ -13,8 +13,6 @@
 */
 
 #include "menu.h"
-#include "sudo.h"
-#include "usuarios.h"
 
 int menu::getOpcion_menu_principal() const{
     return opcion_menu_principal;
@@ -30,6 +28,16 @@ int menu::getTipo_mensaje_usuarios() const{
 
 void menu::setTipo_mensaje_usuarios(int value){
     tipo_mensaje_usuarios = value;
+}
+
+int menu::getTipo_mensaje_sudo() const
+{
+    return tipo_mensaje_sudo;
+}
+
+void menu::setTipo_mensaje_sudo(int value)
+{
+    tipo_mensaje_sudo = value;
 }
 
 void menu::menu_principal(){
@@ -49,22 +57,23 @@ void menu::menu_principal(){
 }
 bool menu::llamamiento_de_funcionalidades(){
     //Se crean objetos tipo sudo y usuarios
-    sudo administrador;
-    usuarios users;
+    //sudo administrador;
     int opt = getOpcion_menu_principal();
     switch (opt) {
     case 1:{
         system("CLS");
-        //Si la opcion ingresada es la 1 se invoca la funcion
-        //verifying_password() de la libreria sudo.h
-        administrador.verifying_password();
+        string clave;
+        cout << "Bienvenido Administrador." << endl;
+        cout << "Por favor ingrese la clave: ";
+        cin >> clave;
+        lib_sudo.verifying_password();
         break;
     }
     case 2:{
         system("CLS");
         //Si la opcion ingresada es la 2 se invoca la funcion
         //users() de la libreria usuarios.h
-        users.users();
+        lib_users.users();
         break;
     }
     case 3:
@@ -91,19 +100,36 @@ void menu::gui_usuarios(){
 }
 
 void menu::mensajes_usuarios(){
-    usuarios users;
+    usuarios lib_usuarios;
     int msj = getTipo_mensaje_usuarios();
     switch (msj){
     case 1:
         cout << "No se encontro el usuario ingresado." << endl;
         break;
-    case 2:
+    case 2:{
+        int clave;
         cout << "Ingrese la clave: ";
-        int clave_ingresada = 0;
-        //Se le pide al usuario la clave
-        cin >> clave_ingresada;
-        users.setClave_ingresada(clave_ingresada);
+        cin >> clave;
+        //lib_usuarios.setClave_ingresada(clave);
         break;
+    }
     }
 }
 
+int menu::ingresar_contrasena_usuario(){
+    int clave;
+    cout << "Ingrese la clave: ";
+    cin >> clave;
+    return clave;
+}
+
+void menu::mensajes_sudo(){
+    int msj = getTipo_mensaje_sudo();
+    switch (msj) {
+        case 1:{
+
+            lib_sudo.setClave_sudo_ingresada(clave);
+            break;
+        }
+    }
+}
