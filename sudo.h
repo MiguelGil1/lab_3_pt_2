@@ -21,11 +21,21 @@
 #ifndef SUDO_H
 #define SUDO_H
 #include <iostream>
+#include "encriptar_desencriptar.h"
 using namespace std;
 
 class sudo{
 public:
     void verifying_password();
+    string getClave_sudo_ingresada() const;
+    void setClave_sudo_ingresada(const string &value);
+    bool getKey_clave() const;
+    void setKey_clave(bool value);
+
+private:
+    codificar_decodificar lib_codificar;
+    string clave_sudo_ingresada;
+    bool key_clave;
 };
 
 #endif // SUDO_H
