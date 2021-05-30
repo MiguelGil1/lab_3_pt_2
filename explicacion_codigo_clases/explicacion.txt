@@ -21,6 +21,8 @@ LIBRERIRIAS, METODOS Y ATRIBUTOS:
 
 -> LIBRERIA SUDO:
 	ATRIBUTOS:
-		*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el 		usuario para ingresar al ATM como administrador. Tiene metodos setter y getter
+		*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el 		usuario para ingresar al ATM como administrador. Tiene metodos setter y getter.
+		*key_clave: Atributo privado tipo bool el cual se cual almacena TRUE si la clave ingresada por 		el usuario para ingresar al ATM como administrador es correcta, de lo contrario la almacena 		FALSE. Tiene metodos setter y getter.
 	METODOS:
-		*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario 		sudo es correcta.
+		*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario 			sudo es correcta.
+		*sign_in: Metodo que es utilizado para el registro de usuarios.
