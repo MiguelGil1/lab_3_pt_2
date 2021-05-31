@@ -1,28 +1,42 @@
 LIBRERIRIAS, METODOS Y ATRIBUTOS:
 
 -> LIBRERIA MENU:
-	ATRIBUTOS:
-		*opcion_menu_principal: Atributo privado tipo int al cual se le crean metodos getter y setter.
-		Se encargara de contener la opcion que el usuario ingrese en el metodo menu_principal.
-		*lib_users: Objeto tipo usuarios.
-		*lib_sudo: Objeto tipo sudo.
-	METODOS:
-	*menu_principal: Metodo que tiene como principal funcionalidad la impresion del menu principal de ATM
-		Bienvenido a su cajero electronico.
-        	1.) Ingresar como administrador.
-        	2.) Ingresar como usuario.
-        	3.) Salir.
-        	Seleccione una opcion:
-	El cual se imprimira cada vez que el usuario (sudo / normal) termine de realizar una transaccion o 		hasta que el mismo usuario seleccione la opcion 3.
-	Se le envia la opcion ingresada al atributo privado de la clase opcion_menu_principal por medio de su 	metodo set.
 	
-	*llamamiento_de_funcionalidades: Por medio del metodo get del atributo privado opcion+menu_principal, 		se trae su contendio y se le asigna al la variable opt, la cual por medio de un switch/case se llaman 
-	las funcionalidades requeridas del ATM.
+ATRIBUTOS:
+*opcion_menu_principal: Atributo privado tipo int al cual se le crean metodos getter y setter.Se encargara de contener la opcion que el usuario ingrese en el metodo menu_principal.
+
+*lib_users: Objeto tipo usuarios.
+
+*lib_sudo: Objeto tipo sudo.
+
+METODOS:
+*menu_principal: Metodo que tiene como principal funcionalidad la impresion del menu principal de ATM
+	Bienvenido a su cajero electronico.
+	1.) Ingresar como administrador.
+	2.) Ingresar como usuario.
+	3.) Salir.
+	Seleccione una opcion:
+El cual se imprimira cada vez que el usuario (sudo / normal) termine de realizar una transaccion o hasta que el mismo usuario seleccione la opcion 3.Se le envia la opcion ingresada al atributo privado de la clase opcion_menu_principal por medio de su metodo set.
+	
+*llamamiento_de_funcionalidades: Por medio del metodo get del atributo privado opcion+menu_principal, se trae su contendio y se le asigna al la variable opt, la cual por medio de un switch/case se llaman las funcionalidades requeridas del ATM.
 
 -> LIBRERIA SUDO:
-	ATRIBUTOS:
-		*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el 		usuario para ingresar al ATM como administrador. Tiene metodos setter y getter.
-		*key_clave: Atributo privado tipo bool el cual se cual almacena TRUE si la clave ingresada por 		el usuario para ingresar al ATM como administrador es correcta, de lo contrario la almacena 		FALSE. Tiene metodos setter y getter.
-	METODOS:
-		*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario 			sudo es correcta.
-		*sign_in: Metodo que es utilizado para el registro de usuarios.
+
+ATRIBUTOS:
+*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el usuario para ingresar al ATM como administrador. Tiene metodos setter y getter.
+
+*key_clave: Atributo privado tipo bool el cual se cual almacena TRUE si la clave ingresada por el usuario para ingresar al ATM como administrador es correcta, de lo contrario la almacena FALSE. Tiene metodos setter y getter.
+
+*id_a_registrar: Atributo privado tipo string el cual contendra el id que se quiere registrar en el banco.
+
+*encontrado: Atributo privado tipo bool el cual almacenara TRUE, si el id_a_registrar, ya se encuentra registrado en el banco, de lo contrario, almacena FALSE. Tiene metodos setter y getter.
+
+*usuario_a_registrar: Atributo privado tipo strign el cual almacenara la info del usuario a registrar en el siguiente formato:
+	identificacion,clave(4 digitos),saldo
+
+METODOS:
+*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario 			sudo es correcta.
+
+*verifying_existence: Metodo el cual obtiene por el metodo get del atributo id_a_registrar, el documento que se solicita registrar en el banco, y valida si el mismo ya se encuentra inscrito en el banco. Si lo esta, le asigna TRUE al atributo privado encontrado, de lo contrario FALSE, por medio de su metodo set.
+
+*sign_in: Metodo que es utilizado para el registro de usuarios.
