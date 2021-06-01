@@ -26,7 +26,6 @@ public:
     void setTipo_mensaje_usuarios(int value);
     int getTipo_mensaje_sudo() const;
     void setTipo_mensaje_sudo(int value);
-
     int ingresar_contrasena_usuario();
 
 private:
@@ -34,7 +33,7 @@ private:
     int tipo_mensaje_usuarios;
     int tipo_mensaje_sudo;
     sudo lib_sudo;
-    usuarios lib_users;
+    usuarios lib_usuarios;
 };
 
 #endif // MENU_H
