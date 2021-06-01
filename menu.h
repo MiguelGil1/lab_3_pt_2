@@ -17,16 +17,17 @@ class menu{
 public:
     void menu_principal();
     bool llamamiento_de_funcionalidades();
-    void gui_usuarios();
+
     void mensajes_usuarios();
-    void mensajes_sudo();
+
     int getOpcion_menu_principal() const;
     void setOpcion_menu_principal(int value);
+
     int getTipo_mensaje_usuarios() const;
     void setTipo_mensaje_usuarios(int value);
+
     int getTipo_mensaje_sudo() const;
     void setTipo_mensaje_sudo(int value);
-    int ingresar_contrasena_usuario();
 
 private:
     int opcion_menu_principal;

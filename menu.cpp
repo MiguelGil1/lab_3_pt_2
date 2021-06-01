@@ -124,10 +124,77 @@ bool menu::llamamiento_de_funcionalidades(){
         break;
     }
     case 2:{
+        string id = "";
         system("CLS");
-        //Si la opcion ingresada es la 2 se invoca la funcion
-        //users() de la libreria usuarios.h
-        lib_usuarios.users();
+        cout << "Bienvenido Usuario." << endl;
+        cout << "Por favor ingrese numero de identificacion: ";
+        cin >> id;
+        //lib_usuarios.setId_ingresada(id);
+        lib_usuarios.verifying_existence(id);
+        bool key = lib_usuarios.getEncontrado();
+        if(key == true){
+            int clave_ingresada;
+            cout << "Ingrese la clave: ";
+            cin >> clave_ingresada;
+            int clave = lib_usuarios.getClave_usuario();
+            if(clave == clave_ingresada){
+                system("cls");
+                int opt_usuario = 0;
+                cout << "Bienvenido usuario " << id << ", que desea realizar?" << endl;
+                cout << "1.) Retirar dinero." << endl;
+                cout << "2.) Consultar Saldo." << endl;
+                cout << "3.) Salir." << endl;
+                cout << "Seleccione una opcion: ";
+                cin >> opt_usuario;
+                switch (opt_usuario) {
+                case 1:{
+                    system("cls");
+                    int retirar = 0;
+                    cout << "Usuario " << id << endl;
+                    cout << "Por favor ingrese el dinero a retirar: $ ";
+                    cin >> retirar;
+                    lib_usuarios.setSaldo_a_retirar(retirar);
+                    lib_usuarios.retirar();
+                    bool estado = lib_usuarios.getEstado_transaccion();
+                    if(estado == true){
+                        int saldo_post_transaccion = lib_usuarios.getSaldo();
+                        cout << "Retiro exitoso!" << endl;
+                        cout << "Saldo actual: $" << saldo_post_transaccion + 1000 << endl;
+                    }else{
+                        cout << "Fondos insuficientes" << endl;
+                    }
+                    break;
+                }
+                case 2:{
+                    system("cls");
+                    system("CLS");
+                    cout << "Usuario " << id << endl;
+                    lib_usuarios.consultar_saldo();
+                    bool estado = lib_usuarios.getEstado_transaccion();
+                    if(estado == true){
+                        int saldo_post_transaccion = lib_usuarios.getSaldo();
+                        cout << "Su saldo es de: $" << saldo_post_transaccion + 1000 << endl;
+                    }else{
+                        cout << "Fondos insuficientes" << endl;
+                    }
+                   break;
+                }
+                case 3:{
+                    cout << "Gracias por utilizar nuestros servicios :)" << endl;
+                    cout << "Cerrando sesion..." << endl;
+                    break;
+                }
+                default:{
+                    cout << "Opcion fuera de rango." << endl;
+                    break;
+                }
+                }
+            }else{
+                cout << "Clave incorrecta." << endl;
+            }
+        }else{
+            cout << "No se encontro el usuario ingresado." << endl;
+        }
         break;
     }
     case 3:
@@ -146,32 +213,4 @@ bool menu::llamamiento_de_funcionalidades(){
         system("CLS");
     }
     return true;
-}
-
-void menu::gui_usuarios(){
-    cout << "Bienvenido Usuario." << endl;
-    cout << "Por favor ingrese numero de identificacion: ";
-}
-
-void menu::mensajes_usuarios(){
-    int msj = getTipo_mensaje_usuarios();
-    switch (msj){
-    case 1:
-        cout << "No se encontro el usuario ingresado." << endl;
-        break;
-    case 2:{
-        int clave;
-        cout << "Ingrese la clave: ";
-        cin >> clave;
-        lib_usuarios.setClave_ingresada(clave);
-        break;
-    }
-    }
-}
-
-int menu::ingresar_contrasena_usuario(){
-    int clave;
-    cout << "Ingrese la clave: ";
-    cin >> clave;
-    return clave;
 }
