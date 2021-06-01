@@ -10,16 +10,48 @@
 #ifndef USUARIOS_H
 #define USUARIOS_H
 #include <iostream>
+#include "encriptar_desencriptar.h"
 using namespace std;
 
 class usuarios{
 public:
-    void users();
-    int getClave_ingresada() const;
-    void setClave_ingresada(int value);
+    void verifying_existence(string);
+    void retirar();
+    void consultar_saldo();
+    void actualizar_info();
+
+    string getId_ingresada() const;
+    void setId_ingresada(const string &value);
+
+    bool getEncontrado() const;
+    void setEncontrado(bool value);
+
+    string getId() const;
+    void setId(const string &value);
+
+    int getClave_usuario() const;
+    void setClave_usuario(int value);
+
+    int getSaldo() const;
+    void setSaldo(int value);
+
+    int getSaldo_a_retirar() const;
+    void setSaldo_a_retirar(int value);
+
+    bool getEstado_transaccion() const;
+    void setEstado_transaccion(bool value);
 
 private:
-    int clave_ingresada;
+    codificar_decodificar lib_codificar;
+    string id_ingresada;
+    bool encontrado;
+    bool estado_transaccion;
+
+    //ATRIBUTOS DE USUARIO
+    string id;
+    int clave_usuario;
+    int saldo;
+    int saldo_a_retirar;
 };
 
 #endif // USUARIOS_H
