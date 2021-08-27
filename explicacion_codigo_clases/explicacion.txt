@@ -1,26 +1,73 @@
 LIBRERIRIAS, METODOS Y ATRIBUTOS:
 
 -> LIBRERIA MENU:
-	ATRIBUTOS:
-		*opcion_menu_principal: Atributo privado tipo int al cual se le crean metodos getter y setter.
-		Se encargara de contener la opcion que el usuario ingrese en el metodo menu_principal.
-		*lib_users: Objeto tipo usuarios.
-		*lib_sudo: Objeto tipo sudo.
-	METODOS:
-	*menu_principal: Metodo que tiene como principal funcionalidad la impresion del menu principal de ATM
+ATRIBUTOS:
+
+*opcion_menu_principal: Atributo privado tipo int al cual se le crean metodos getter y setter. Se encargara de contener la opcion que el usuario ingrese en el metodo menu_principal.
+
+*lib_users: Objeto tipo usuarios.
+
+*lib_sudo: Objeto tipo sudo.
+
+METODOS:
+
+*menu_principal: Metodo que tiene como principal funcionalidad la impresion del menu principal de ATM
 		Bienvenido a su cajero electronico.
         	1.) Ingresar como administrador.
         	2.) Ingresar como usuario.
         	3.) Salir.
         	Seleccione una opcion:
-	El cual se imprimira cada vez que el usuario (sudo / normal) termine de realizar una transaccion o 		hasta que el mismo usuario seleccione la opcion 3.
-	Se le envia la opcion ingresada al atributo privado de la clase opcion_menu_principal por medio de su 	metodo set.
+
+El cual se imprimira cada vez que el usuario (sudo / normal) termine de realizar una transaccion o hasta que el mismo usuario seleccione la opcion 3.
+Se le envia la opcion ingresada al atributo privado de la clase opcion_menu_principal por medio de su 	metodo set.
 	
-	*llamamiento_de_funcionalidades: Por medio del metodo get del atributo privado opcion+menu_principal, 		se trae su contendio y se le asigna al la variable opt, la cual por medio de un switch/case se llaman 
-	las funcionalidades requeridas del ATM.
+*llamamiento_de_funcionalidades: Por medio del metodo get del atributo privado opcion+menu_principal, se trae su contendio y se le asigna al la variable opt, la cual por medio de un switch/case se llaman las funcionalidades requeridas del ATM.
 
 -> LIBRERIA SUDO:
-	ATRIBUTOS:
-		*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el 		usuario para ingresar al ATM como administrador. Tiene metodos setter y getter
-	METODOS:
-		*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario 		sudo es correcta.
+
+ATRIBUTOS:
+
+*clave_sudo_ingresada: Atributo privado tipo string que contiene la clave ingresada por el usuario para ingresar al ATM como administrador. Tiene metodos setter y getter.
+
+*key_clave: Privado tipo bool el cual almacena TRUE si la clave ingresada por el usuario sudo es correcto, de lo contrario. almacena FALSE.
+
+*id_a_registrar: Almacena el string del id que se quiere registrar en el banco
+
+*encontrado: Booleano que almacena TRUE si el usuario ya se encuentra registrado en el banco, de lo contrario almacena FALSE
+
+*usuario_a_registrar: String que almacena la info del usuario que se quiere registrar en el banco de la sigueinte forma:
+	identificacion,clave,saldo
+
+METODOS:
+
+*verifying_password: Metodo que se encarga de verificar si la clave ingresada por el usuario sudo es correcta.
+
+*verifying_existence: Verifica si el usuario que se quiere registrar se encuentra ya en la base de datos del banco, le envia TRUE o FALSE al atributo encontrado dependiendo del caso.
+
+*sign_in: Metodo que permite la inscripcion del usuario al banco.
+
+->LIBRERIA USUARIOS:
+
+ATRIBUTOS:
+*encontrado: Booleano que almacena TRUE si el usuario ya se encuentra registrado en el banco, de lo contrario almacena FALSE
+
+*id: String que almacena el id del usuario que desea ingresar a su cuenta.
+
+*clave_usuario: Entero que almacena la clave del usuario que desea ingresar a su cuenta.
+
+*saldo: Entero que almacena el saldo del usuario que desea ingresar a su cuenta.
+
+METODOS:
+
+*verifying_existence:  Verifica si el usuario que se quiere ingresar a su cuenta se encuentra ya en la base de datos del banco, le envia TRUE o FALSE al atributo encontrado dependiendo del caso.
+*saldo_a_retirar: Entero que almacena el saldo que el usuario desea retirar.
+
+*estado_transaccion: booleano que almacena TRUE si se pudo realizar el tiro o consulta de saldo, de lo contrario, almacena FALSE.
+
+METODOS:
+
+*verifying_existence:  Verifica si el usuario que se quiere ingresar a su cuenta se encuentra ya en la base de datos del banco, le envia TRUE o FALSE al atributo encontrado dependiendo del caso.
+
+*retirar: Metodo que permite retirar, si el saldo que el usuario desea retirar mas 1000 es superiro al saldo total en su cuenta.
+
+*consultar_saldo: Metodo que permite consultar el saldo del usuario si su saldo en cuenta es igual o superior a 1000.
