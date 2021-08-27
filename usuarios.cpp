@@ -98,62 +98,66 @@ void usuarios::verifying_existence(string id_usuario){
     //Se abre el archivo usuarios_decodificados.txt y se guarda la info
     //de los usuarios decodificados.
     string contendido_archivo = lib_codificar.decodificar(semilla,metodo,"usuarios");
-    Guardar.open("../usuarios_decodificados.txt");
-    Guardar << contendido_archivo;
-    Guardar.close();
-    bool find_usr = false;
+    if(contendido_archivo == ""){
+        cout << "Acceso denegado!\nNo hay usuarios registrados en la DB del ATM." << endl;
+    }else{
+        Guardar.open("../usuarios_decodificados.txt");
+        Guardar << contendido_archivo;
+        Guardar.close();
+        bool find_usr = false;
 
-    //Se abre el archivo usuarios_decodifucados.txt
-    Leer.open("../usuarios_decodificados.txt");
-    char linea[300];
-    Leer.getline(linea,sizeof(linea));
-    char id[15];
-    //Se lee el archivo hasta que se llegue al final del mismo
-    while(!Leer.eof()){
-        //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
-        //Id, clace, saldo
-        for(int i = 0; i < 3; i++){
-            char *puntero;
-            if(i == 0){
-                //strtok recibe dos parametros, ek primero es la linea que queremos dividir
-                //El segundo va a ser el separador y la funcion retorna un puntero
-                puntero = strtok(linea, ",");
-                strcpy(id, puntero);
-                //Se iguala id_tmp al id leido
-                id_tmp = id;
-            }else if(i == 1){
-                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
-                puntero = strtok(NULL,",");
-                //Se convierte el puntero a entero y se iguala a clave
-                clave = atoi(puntero);
-            }else if(i == 2){
-                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
-                puntero = strtok(NULL,"\n");
-                //Se convierte el puntero a entero
-                saldo_transaccional = atoi(puntero);
-                //Se convierte el puntero a entero y se iguala a saldo_transaccional
+        //Se abre el archivo usuarios_decodifucados.txt
+        Leer.open("../usuarios_decodificados.txt");
+        char linea[300];
+        Leer.getline(linea,sizeof(linea));
+        char id[15];
+        //Se lee el archivo hasta que se llegue al final del mismo
+        while(!Leer.eof()){
+            //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
+            //Id, clace, saldo
+            for(int i = 0; i < 3; i++){
+                char *puntero;
+                if(i == 0){
+                    //strtok recibe dos parametros, ek primero es la linea que queremos dividir
+                    //El segundo va a ser el separador y la funcion retorna un puntero
+                    puntero = strtok(linea, ",");
+                    strcpy(id, puntero);
+                    //Se iguala id_tmp al id leido
+                    id_tmp = id;
+                }else if(i == 1){
+                    //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                    puntero = strtok(NULL,",");
+                    //Se convierte el puntero a entero y se iguala a clave
+                    clave = atoi(puntero);
+                }else if(i == 2){
+                    //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                    puntero = strtok(NULL,"\n");
+                    //Se convierte el puntero a entero
+                    saldo_transaccional = atoi(puntero);
+                    //Se convierte el puntero a entero y se iguala a saldo_transaccional
+                }
+            }
+            //Se evalua si el id leido es igual al id a actualizar
+            if(id_usuario == id_tmp){
+                //Si se encuentra se iguala la variable tipo bool encontrado a true
+                setEncontrado(true);
+                find_usr = true;
+                //Le envia a los atributos privados cada una de las caracteristicas del usuario
+                //id, clave y saldo
+                setId(id_tmp);
+                setClave_usuario(clave);
+                setSaldo(saldo_transaccional);
+                break;
+            }else{
+                //De lo contrario se lee la sigueinte linea
+                Leer.getline(linea,sizeof(linea));
             }
         }
-        //Se evalua si el id leido es igual al id a actualizar
-        if(id_usuario == id_tmp){
-            //Si se encuentra se iguala la variable tipo bool encontrado a true
-            setEncontrado(true);
-            find_usr = true;
-            //Le envia a los atributos privados cada una de las caracteristicas del usuario
-            //id, clave y saldo
-            setId(id_tmp);
-            setClave_usuario(clave);
-            setSaldo(saldo_transaccional);
-            break;
-        }else{
-            //De lo contrario se lee la sigueinte linea
-            Leer.getline(linea,sizeof(linea));
+        Leer.close();
+        if(find_usr == false){
+            //Sie el usuario no se encuentra se elimina el archivo
+            remove("../usuarios_decodificados.txt");
         }
-    }
-    Leer.close();
-    if(find_usr == false){
-        //Sie el usuario no se encuentra se elimina el archivo
-        remove("../usuarios_decodificados.txt");
     }
 }
 void usuarios::retirar(){

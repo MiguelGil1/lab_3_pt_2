@@ -409,6 +409,9 @@ string codificar_decodificar::decodificar(int semilla, int metodo, string archiv
         for(int i = 0; i < int(texto_archivo_tmp.length())-1;i++){
             texto_archivo += texto_archivo_tmp[i];
         }
+        if(texto_archivo == ""){
+            return "";
+        }
 
         //Se halla el tamaño de que se la dara a la cadena que
         //se reservo en el heap cadena_semilla y cadena_codificada
