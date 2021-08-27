@@ -26,18 +26,97 @@
  opcion elegida se encuentra fuera de rango.
 */
 #include "usuarios.h"
-#include "encriptar_desencriptar.h"
-#include "menu.h"
 #include <fstream>
 #include <string.h>
-int usuarios::getClave_ingresada() const{
-    return clave_ingresada;
+
+void usuarios::verifying_existence(string id_usuario){
+    ifstream Leer;
+    ofstream Guardar;
+    const int semilla = 4, metodo = 2;
+
+    //Se dedodifica la informacion contendia en el archivo usuarios
+    //string id_usuario = getId_ingresada();
+    string id_tmp = "";
+    setEncontrado(false);
+    int saldo_transaccional = 0, clave = 0;
+
+    //Se abre el archivo usuarios_decodificados.txt y se guarda la info
+    //de los usuarios decodificados.
+    string contendido_archivo = lib_codificar.decodificar(semilla,metodo,"usuarios");
+    Guardar.open("../usuarios_decodificados.txt");
+    Guardar << contendido_archivo;
+    Guardar.close();
+
+    //Se abre el archivo usuarios_decodifucados.txt
+    Leer.open("../usuarios_decodificados.txt");
+    char linea[300];
+    Leer.getline(linea,sizeof(linea));
+    char id[15];
+    //Se lee el archivo hasta que se llegue al final del mismo
+    while(!Leer.eof()){
+        //Se crea un for que iterara 3 veces ya que son 3 los datos a leer
+        //Id, clace y saldo
+        for(int i = 0; i < 3; i++){
+            char *puntero;
+            if(i == 0){
+                //strtok recibe dos parametros, ek primero es la linea que queremos dividir
+                //El segundo va a ser el separador y la funcion retorna un puntero
+                puntero = strtok(linea, ",");
+                strcpy(id, puntero);
+                //Se iguala id_tmp al id leido
+                id_tmp = id;
+            }else if(i == 1){
+                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                puntero = strtok(NULL,",");
+                //Se convierte el puntero a entero y se iguala a clave
+                clave = atoi(puntero);
+            }else if(i == 2){
+                //Homolagamente se realiza lo mismo, solo que se le pasa como puntero NULL
+                puntero = strtok(NULL,"\n");
+                //Se convierte el puntero a entero
+                saldo_transaccional = atoi(puntero);
+                //Se convierte el puntero a entero y se iguala a saldo_transaccional
+            }
+        }
+        //Se evalua si el id leido es igual al id a registrar
+        if(id_usuario == id_tmp){
+            //Si se encuentra se iguala la variable tipo bool encontrado a true
+            setEncontrado(true);
+            setId(id_tmp);
+            setClave_usuario(clave);
+            setSaldo(saldo_transaccional);
+            break;
+        }else{
+            //De lo contrario se lee la sigueinte linea
+            Leer.getline(linea,sizeof(linea));
+        }
+    }
+    Leer.close();
+    remove("../usuarios_decodificados.txt");
+}
+void usuarios::retirar(){
+    int retirar_saldo = getSaldo_a_retirar();
+    int saldo_transaccional = getSaldo();
+    if((retirar_saldo+1000) <= saldo_transaccional){
+        saldo_transaccional -= (1000 + retirar_saldo);
+        setEstado_transaccion(true);
+        setSaldo(saldo_transaccional);
+    }else{
+        setEstado_transaccion(false);
+    }
+}
+void usuarios::consultar_saldo(){
+    int saldo_transaccional = getSaldo();
+    if(saldo_transaccional >= 1000){
+        saldo_transaccional -= 1000;
+        setEstado_transaccion(true);
+        setSaldo(saldo_transaccional);
+    }else{
+        setEstado_transaccion(false);
+    }
 }
 
-void usuarios::setClave_ingresada(int value){
-    clave_ingresada = value;
-}
-void usuarios::users(){
+/*void usuarios::users(){
     const int semilla = 4, metodo = 2;
     string usuarios_actualizados = "";
     codificar_decodificar dato;
@@ -127,10 +206,11 @@ void usuarios::users(){
             usuarios.mensajes_usuarios();
             //cout << "No se encontro el usuario ingresado." << endl;
         }else{
-            msj_usuarios = 2;
+            /*msj_usuarios = 2;
             usuarios.setTipo_mensaje_usuarios(msj_usuarios);
-            usuarios.mensajes_usuarios();
-            clave_usuario = getClave_ingresada();
+            usuarios.mensajes_usuarios();*/
+
+            /*clave_usuario = usuarios.ingresar_contrasena_usuario();
 
             //Se evalua si las claves del archivo usuarios_decodificados y la clave
             //ingresada coinciden
@@ -266,6 +346,71 @@ void usuarios::users(){
         //Se remueve el archivo usuarios_decodificados.txt
         remove("../usuarios_decodificados.txt");
     }
+}*/
+
+
+string usuarios::getId_ingresada() const{
+    return id_ingresada;
 }
 
+void usuarios::setId_ingresada(const string &value){
+    id_ingresada = value;
+}
 
+bool usuarios::getEncontrado() const{
+    return encontrado;
+}
+
+void usuarios::setEncontrado(bool value){
+    encontrado = value;
+}
+
+string usuarios::getId() const
+{
+    return id;
+}
+
+void usuarios::setId(const string &value)
+{
+    id = value;
+}
+
+int usuarios::getClave_usuario() const
+{
+    return clave_usuario;
+}
+
+void usuarios::setClave_usuario(int value)
+{
+    clave_usuario = value;
+}
+
+int usuarios::getSaldo() const
+{
+    return saldo;
+}
+
+void usuarios::setSaldo(int value)
+{
+    saldo = value;
+}
+
+int usuarios::getSaldo_a_retirar() const
+{
+    return saldo_a_retirar;
+}
+
+void usuarios::setSaldo_a_retirar(int value)
+{
+    saldo_a_retirar = value;
+}
+
+bool usuarios::getEstado_transaccion() const
+{
+    return estado_transaccion;
+}
+
+void usuarios::setEstado_transaccion(bool value)
+{
+    estado_transaccion = value;
+}

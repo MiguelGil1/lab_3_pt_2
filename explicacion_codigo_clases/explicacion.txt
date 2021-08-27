@@ -60,3 +60,14 @@ ATRIBUTOS:
 METODOS:
 
 *verifying_existence:  Verifica si el usuario que se quiere ingresar a su cuenta se encuentra ya en la base de datos del banco, le envia TRUE o FALSE al atributo encontrado dependiendo del caso.
+*saldo_a_retirar: Entero que almacena el saldo que el usuario desea retirar.
+
+*estado_transaccion: booleano que almacena TRUE si se pudo realizar el tiro o consulta de saldo, de lo contrario, almacena FALSE.
+
+METODOS:
+
+*verifying_existence:  Verifica si el usuario que se quiere ingresar a su cuenta se encuentra ya en la base de datos del banco, le envia TRUE o FALSE al atributo encontrado dependiendo del caso.
+
+*retirar: Metodo que permite retirar, si el saldo que el usuario desea retirar mas 1000 es superiro al saldo total en su cuenta.
+
+*consultar_saldo: Metodo que permite consultar el saldo del usuario si su saldo en cuenta es igual o superior a 1000.
